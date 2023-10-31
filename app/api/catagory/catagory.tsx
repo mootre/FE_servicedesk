@@ -1,10 +1,10 @@
-export const getProducttype =  fetch("http://10.15.0.23:3001/prodtype", {
+export const getProducttype =  fetch("http://10.15.0.23:4000/prodtype", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
 }).then((data) => data.json())
-export const getOwner =  fetch("http://10.15.0.23:3001/owner", {
+export const getOwner =  fetch("http://10.15.0.23:4000/owner", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
