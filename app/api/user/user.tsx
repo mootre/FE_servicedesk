@@ -1,7 +1,7 @@
 import React from "react";
 
 export function alluser() {
-  return fetch("http://10.15.0.23:3001/user", {
+  return fetch("http://10.15.0.23:4000/user", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -10,7 +10,7 @@ export function alluser() {
 }
 
 export function assignasset(credentials) {
-  return fetch("http://10.15.0.23:3001/v1/addasset", {
+  return fetch("http://10.15.0.23:4000/v1/addasset", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
