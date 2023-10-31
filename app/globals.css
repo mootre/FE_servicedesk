@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+  /* main */
+  .main-container {
+    @apply flex min-h-screen flex-1 flex-col items-center  px-6 pb-10 pt-28 max-md:pb-32 sm:px-10;
+  }
+  .topbar {
+    @apply fixed top-0 z-30 flex w-full items-center justify-between bg-slate-300  px-6 py-3;
+  }
+  .leftsidebar {
+    @apply sticky left-0 top-0 z-20 flex h-screen w-fit flex-col justify-between overflow-auto border-r border-slate-300 bg-slate-300 pb-5 pt-28 max-md:hidden;
+  }
+  .leftsidebar_link {
+    @apply relative flex justify-start gap-4 rounded-lg p-2 text-base;
+  }
+  .back_link {
+    @apply relative flex justify-start gap-3 rounded-lg font-bold bg-gray-300;
+  }
+  .bottombar {
+    @apply fixed bottom-0 z-10 w-full bg-slate-300 p-4 backdrop-blur-lg sm:px-7  md:hidden;
+  }
+  .bottombar_container {
+    @apply flex items-center justify-between gap-3 sm:gap-5 max-sm:gap-0;
+  }
+  .bottombar_link {
+    @apply relative flex flex-col items-center gap-2 rounded-lg p-2 sm:flex-1 sm:px-2 sm:py-2.5;
+  }
+  .tooltip {
+    @apply relative flex;
+  }
+  .tooltiptext {
+    @apply  hidden w-auto bg-gray-500 text-white rounded-s p-1 text-center text-[10px];
+  }
+  .tooltip:hover .tooltiptext  {
+    @apply block;
+  }
+}
+
+@layer utilities {
+  .css-invert {
+    @apply invert-[50%] brightness-200;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+    border-radius: 2px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #09090a;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #5c5c7b;
+    border-radius: 50px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #7878a3;
+  }
+}
+
+/*:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}*/
