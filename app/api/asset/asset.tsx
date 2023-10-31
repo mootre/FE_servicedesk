@@ -1,7 +1,7 @@
 import React from 'react'
 
 export function asset(credentials) {
-  return fetch("http://10.15.1.20:4000/v1/addasset", {
+  return fetch("http://10.15.0.23:3001/v1/addasset", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -10,7 +10,7 @@ export function asset(credentials) {
   }).then((data) => data.json());
 }
 export function updateasset(credentials) {
-  return fetch("http://10.15.1.20:4000/v1/updateasset", {
+  return fetch("http://10.15.0.23:3001/v1/updateasset", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -19,7 +19,7 @@ export function updateasset(credentials) {
   }).then((data) => data.json());
 }
 export function deletecomponent(credentials) {
-  return fetch("http://10.15.1.20:4000/v1/deletecomponent", {
+  return fetch("http://10.15.0.23:3001/v1/deletecomponent", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -28,7 +28,7 @@ export function deletecomponent(credentials) {
   }).then((data) => data.json());
 }
 export function assetmaster() {
-  return fetch("http://10.15.1.20:4000/v1/listasset", {
+  return fetch("http://10.15.0.23:3001/v1/listasset", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -36,7 +36,7 @@ export function assetmaster() {
   }).then((data) => data.json());
 }
 export function assetmasterassign() {
-  return fetch("http://10.15.1.20:4000/v1/listassetassign", {
+  return fetch("http://10.15.0.23:3001/v1/listassetassign", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -44,7 +44,7 @@ export function assetmasterassign() {
   }).then((data) => data.json());
 }
 export function assetuserhw(username) {
-  const url = `http://10.15.1.20:4000/v1/getassetuserhw/${username}`;
+  const url = `http://10.15.0.23:3001/v1/getassetuserhw/${username}`;
   return fetch(url, {
         method: "GET",
         headers: {
@@ -53,7 +53,7 @@ export function assetuserhw(username) {
       }).then((data) => data.json());
 }
 export function assetusersw(username) {
-  const url = `http://10.15.1.20:4000/v1/getassetusersw/${username}`;
+  const url = `http://10.15.0.23:3001/v1/getassetusersw/${username}`;
   return fetch(url, {
         method: "GET",
         headers: {
@@ -62,7 +62,7 @@ export function assetusersw(username) {
       }).then((data) => data.json());
 }
 export function assetcomponent() {
-  return fetch("http://10.15.1.20:4000/v1/listcomponent", {
+  return fetch("http://10.15.0.23:3001/v1/listcomponent", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

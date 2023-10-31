@@ -1,5 +1,5 @@
 export function assignasset(credentials) {
-  return fetch("http://10.15.1.20:4000/v1/addassignasset", {
+  return fetch("http://10.15.0.23:3001/v1/addassignasset", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -9,7 +9,7 @@ export function assignasset(credentials) {
 }
 
 export function updateassigned(credentials) {
-  return fetch("http://10.15.1.20:4000/v1/updateassign", {
+  return fetch("http://10.15.0.23:3001/v1/updateassign", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -19,7 +19,7 @@ export function updateassigned(credentials) {
 }
 
 export function assigncomponent(credentials) {
-  return fetch("http://10.15.1.20:4000/v1/addassigncomponent", {
+  return fetch("http://10.15.0.23:3001/v1/addassigncomponent", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
