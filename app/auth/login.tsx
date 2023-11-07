@@ -9,7 +9,7 @@ function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(username)
+        //console.log(username)
         const response = await userService.authlogin({ username, password });
         if (response) {
             localStorage.setItem("accessToken", response.token);

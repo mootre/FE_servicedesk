@@ -10,7 +10,7 @@ import { useSession } from 'next-auth/react'
 async function Topbar() {
   //const {data : session} = useSession(); 
   const session = await getServerSession(authOptions);
-  console.log(session);
+  //console.log(session);
   return (
     <nav className="topbar">
       <Link href="/" className="flex items-center gap-4">
