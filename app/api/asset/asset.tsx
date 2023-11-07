@@ -1,6 +1,6 @@
 import React from 'react'
 
-export function asset(credentials) {
+export function asset(credentials:any) {
   return fetch("http://10.15.0.23:4000/v1/addasset", {
     method: "POST",
     headers: {
@@ -9,7 +9,7 @@ export function asset(credentials) {
     body: JSON.stringify(credentials),
   }).then((data) => data.json());
 }
-export function updateasset(credentials) {
+export function updateasset(credentials:any) {
   return fetch("http://10.15.0.23:4000/v1/updateasset", {
     method: "PUT",
     headers: {
@@ -18,7 +18,7 @@ export function updateasset(credentials) {
     body: JSON.stringify(credentials),
   }).then((data) => data.json());
 }
-export function deletecomponent(credentials) {
+export function deletecomponent(credentials:any) {
   return fetch("http://10.15.0.23:4000/v1/deletecomponent", {
     method: "PUT",
     headers: {
@@ -43,7 +43,7 @@ export function assetmasterassign() {
     }
   }).then((data) => data.json());
 }
-export function assetuserhw(username) {
+export function assetuserhw(username:number) {
   const url = `http://10.15.0.23:4000/v1/getassetuserhw/${username}`;
   return fetch(url, {
         method: "GET",
@@ -52,7 +52,7 @@ export function assetuserhw(username) {
         }
       }).then((data) => data.json());
 }
-export function assetusersw(username) {
+export function assetusersw(username:number) {
   const url = `http://10.15.0.23:4000/v1/getassetusersw/${username}`;
   return fetch(url, {
         method: "GET",

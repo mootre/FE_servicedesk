@@ -1,7 +1,7 @@
-import _ from "lodash";
+import _ from "lodash"
 import { useState } from "react";
 
-const Pagination = ({ items, pageSize, currentPage, onPageChange }) => {
+const Pagination = ({ items, pageSize, currentPage, onPageChange }:{items:number,pageSize:number,currentPage:number,onPageChange:(newPage:number)=>void}) => {
   const pageCount = items / pageSize;
   if (Math.ceil(pageCount) === 1) return null;
   const pageStart = currentPage === 1 ? 1 : (currentPage - 1) * pageSize + 1;

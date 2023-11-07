@@ -3,9 +3,9 @@
 import { getProducttype,getOwner } from "@/app/api/catagory/catagory";
 import React,{useState,useEffect} from "react";
 
-export const DDProducttype = ({onChange}) => {
+export const DDProducttype = ({value,onChange}:{value:String,onChange:(values: string) => void }) => {
   const [types, setTypes] = useState([]);
-  const [selectedType, setSelectedType] = useState("");
+  const [selectedType, setSelectedType] = useState(''); 
 
   useEffect(() => {
     async function fetchData() {
@@ -15,9 +15,10 @@ export const DDProducttype = ({onChange}) => {
     fetchData();
   }, []);
 
-  const handleSelectChange = (event) => {
-    setSelectedType(event.target.value);
-    onChange(event.target.value);
+  const handleSelectChange = (event:React.ChangeEvent<HTMLSelectElement>) => {
+    const newValue = event.target.value;
+    setSelectedType(newValue);
+    onChange(newValue);
   };
   return (
     <select
@@ -26,7 +27,7 @@ export const DDProducttype = ({onChange}) => {
     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
   >
     <option></option>
-    {types.map((type) => (
+    {types.map((type:any) => (
       <option key={type.product_type} value={type.product_type}>{type.product_type}</option>
     ))}
   </select>
@@ -47,7 +48,7 @@ export const DDOwner = () => {
     fetchDataOwner();
   }, []);
 
-  const handleSelectChangeOwner = (event) => {
+  const handleSelectChangeOwner = (event:React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedTypeOwner(event.target.value);
   };
   return (
@@ -57,7 +58,7 @@ export const DDOwner = () => {
     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
   >
     <option></option>
-    {typesOwner.map((type) => (
+    {typesOwner.map((type:any) => (
       <option key={type.Owner} value={type.Owner}>
         {type.Owner}
       </option>

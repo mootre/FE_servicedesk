@@ -7,14 +7,11 @@ const page:FC<pageProps>=({params})=>{
 }*/
 "use client";
 import React, { useState, useEffect } from "react";
-import { DDProducttype, DDOwner } from "@/components/ui/Dropdownlist";
 import { asset, updateasset } from "@/app/api/asset/asset";
 import { ToastContainer, toast } from "react-toastify";
-import { tabbar_asset } from "@/constants";
 import "react-toastify/dist/ReactToastify.css";
 import { assetbyitem } from "@/app/api/asset/[...aseetid]/asset";
 import Back from "@/components/ui/Back";
-import { Urlconverto, converttoUrl } from "@/components/function/function";
 import AssetComponent from "@/components/forms/AssetComponent";
 
 //export default page;

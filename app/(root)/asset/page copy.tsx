@@ -6,14 +6,14 @@ const page:FC<pageProps>=({params})=>{
     return <div>page : {params.id}</div>
 }*/
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FormEvent } from "react";
 import { DDProducttype, DDOwner } from "@/components/ui/Dropdownlist";
 import { asset, updateasset } from "@/app/api/asset/asset";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import assetbyitem from "@/app/api/asset/[...aseetid]/asset";
+import {assetbyitem} from "@/app/api/asset/[...aseetid]/asset";
 import Back from "@/components/ui/Back";
-import { Urlconverto, convertUrl } from "@/components/function/function";
+import { Urlconverto, converttoUrl } from "@/components/function/function";
 
 //export default page;
 export default function page({ params }: { params: { id: string } }) {
@@ -64,7 +64,7 @@ export default function page({ params }: { params: { id: string } }) {
       theme: "light",
     });
   };
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const response = await updateasset({
       name: name,
@@ -100,7 +100,7 @@ export default function page({ params }: { params: { id: string } }) {
     async function getdetailasset() {
       try {
         const res = await assetbyitem({
-          params: { id: Urlconverto(params.id) },
+          params: { id: 1},//Urlconverto(params.id) },
         });
         const result = res.result.data[0];
         setInv(result.Invno);
@@ -337,7 +337,6 @@ export default function page({ params }: { params: { id: string } }) {
                 className="bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 min={1}
                 value={qty}
-                onChange={(e) => setQty(e.target.value)}
               ></input>
             </div>
             <div>

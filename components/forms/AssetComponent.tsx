@@ -10,15 +10,20 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PopupConfirm from "../ui/PopupConfirm";
 
-function AssetComponent({ assetid }) {
+interface Selectboxpage {
+  [key: number]: { itemId: number; itemname: string }[];
+}
+
+function AssetComponent({ assetid }: { assetid: number }) {
   const [listasset, setListasset] = useState([]);
   const [listcomponent, setListcomponent] = useState([]);
-  const [username, setUsername] = useState();
+  const [username, setUsername] = useState(Number);
   const [currentPageAsset, setCurrentPageAsset] = useState(1);
   const [popupasset, setPopupasset] = useState(false);
   const [openconfirm, setOpenconfirm] = useState(false);
-  const [selectedCheckboxesPerPage, setSelectedCheckboxesPerPage] = useState({});
-  const [parentchild,setParentchild] = useState({parentid:"",childid:""});
+  const [selectedCheckboxesPerPage, setSelectedCheckboxesPerPage] =
+    useState<Selectboxpage>({});
+  const [parentchild, setParentchild] = useState({ parentid: 0, childid: 0 });
   const pageSize = 10;
 
   async function getlistcomponent() {
@@ -34,10 +39,15 @@ function AssetComponent({ assetid }) {
   useEffect(() => {
     getlistcomponent();
   }, []);
-  async function assigningitem(username, itemid, itemname, assignby) {
+  async function assigningitem(
+    username: number,
+    itemid: number,
+    itemname: string,
+    assignby: number
+  ) {
     const response = await assigncomponent({
       username: username,
-      itemid: parseInt(assetid),
+      itemid: assetid,
       component: itemid,
       assignby: assignby,
     });
@@ -53,7 +63,7 @@ function AssetComponent({ assetid }) {
     const response = await assetcomponent();
     setListasset(response);
   }
-  const handleSuccessButtonClick = (wording) => {
+  const handleSuccessButtonClick = (wording: string) => {
     toast.success(wording, {
       position: "top-center",
       autoClose: 2000,
@@ -76,7 +86,7 @@ function AssetComponent({ assetid }) {
         for (const checkbox of selectedCheckboxesPerPage[number]) {
           const { itemId, itemname } = checkbox;
           if (checkbox) {
-            assigningitem(username, itemId, itemname, "1");
+            assigningitem(username, itemId, itemname, 1);
           }
         }
       }
@@ -93,10 +103,14 @@ function AssetComponent({ assetid }) {
     setSelectedCheckboxesPerPage({});
     setPopupasset(false);
   };
-  const handlePageChangeAsset = (page) => {
+  const handlePageChangeAsset = (page: number) => {
     setCurrentPageAsset(page);
   };
-  const handleCheckboxChange = (event, itemId, itemname) => {
+  const handleCheckboxChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    itemId: number,
+    itemname: string
+  ) => {
     const selectedCheckboxesPage = { ...selectedCheckboxesPerPage }; //เก็บข้อมูลทั้งหมดใน array ที่มีอยู่ก่อนหน้า
     if (event.target.checked) {
       //selectedCheckboxesPage[currentPageAsset].push({itemId,itemname});
@@ -113,7 +127,7 @@ function AssetComponent({ assetid }) {
     }
     setSelectedCheckboxesPerPage(selectedCheckboxesPage);
   };
-  const handlePopupResult = async (result) => {
+  const handlePopupResult = async (result: boolean) => {
     if (result) {
       const res = await deletecomponent({
         username: username,
@@ -124,14 +138,17 @@ function AssetComponent({ assetid }) {
         handleSuccessButtonClick(`Remove successfully.`);
         getlistcomponent();
       }
-    } 
-    result?setOpenconfirm(false):setOpenconfirm(false);
+    }
+    result ? setOpenconfirm(false) : setOpenconfirm(false);
   };
   const openpopupconfirm = (parent: number, child: number) => {
-    setParentchild({parentid:parent,childid:child});
+    setParentchild({
+      parentid: parent,
+      childid: child,
+    });
     setOpenconfirm(!openconfirm);
   };
-  
+
   const paginatePostAsset = paginate(listasset, currentPageAsset, pageSize); //กำหนดการแสดงข้อมูลในตาราง Asset
 
   return (
@@ -171,7 +188,7 @@ function AssetComponent({ assetid }) {
             </tr>
           </thead>
           <tbody>
-            {listcomponent.map((res, ind) => (
+            {listcomponent.map((res: any, ind: number) => (
               <tr key={ind}>
                 <td className="px-6 py-4">{ind + 1}</td>
                 <td className="px-6 py-4">{res.ItemName}</td>
@@ -181,7 +198,9 @@ function AssetComponent({ assetid }) {
                 <td className="px-6 py-4">{res.Serial}</td>
                 <td
                   className="px-6 py-4 cursor-pointer"
-                  onClick={() => openpopupconfirm(assetid,res.ItemID)}
+                  onClick={() =>
+                    openpopupconfirm(assetid, parseInt(res.ItemID))
+                  }
                 >
                   <MdDelete />
                 </td>
@@ -242,7 +261,7 @@ function AssetComponent({ assetid }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {paginatePostAsset.map((res, ind) => (
+                  {paginatePostAsset.map((res: any, ind: number) => (
                     <tr
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700  hover:bg-gray-300 dark:hover:bg-gray-600"
                       key={ind}

@@ -1,6 +1,6 @@
 .dockerignore
 .gitignore
 README.md
-node_modules
-origin
+node_modules/
+origin/
 .env

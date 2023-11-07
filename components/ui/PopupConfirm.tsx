@@ -8,6 +8,14 @@ const PopupConfirm = ({
   handleTrue,
   handleFalse,
   onResult
+}:{
+  toggle:boolean,
+  title:string,
+  trueBtn:string,
+  falseBtn:string,
+  handleTrue:string,
+  handleFalse:string,
+  onResult:(value:boolean)=>void
 }) => {
   const [open, setOpen] = useState(false);
 

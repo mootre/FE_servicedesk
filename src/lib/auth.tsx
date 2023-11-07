@@ -8,7 +8,7 @@ interface Responsebody{
   auth:string;
 }
 
-export const authOptions={
+export const authOptions: NextAuthOptions={
     session:{
         strategy: "jwt",
     },
@@ -40,7 +40,7 @@ export const authOptions={
           }
         })
       ],
-      callback:{
+      callbacks:{
         async session({session,user}){
             console.log("callback");
             return session;

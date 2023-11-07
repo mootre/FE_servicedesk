@@ -1,9 +1,7 @@
 "use client";
 
 import {
-  assetmaster,
   assetmasterassign,
-  assetuser,
   assetuserhw,
   assetusersw,
 } from "@/app/api/asset/asset";
@@ -18,19 +16,21 @@ import React, { useEffect, useState } from "react";
 import { IoLogoSlack, IoDesktopOutline } from "react-icons/io5";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import PropTypes from "prop-types";
+interface SelectedCheckboxes {
+  [key: number]: { itemId: number; itemname: string }[];
+}
 
 function page() {
   const [listdata, setListdata] = useState([]);
   const [listasset, setListasset] = useState([]);
   const [listassetusersw, setListassetusersw] = useState([]);
   const [listassetuserhw, setListassetuserhw] = useState([]);
-  const [fullname, setFullname] = useState();
-  const [username, setUsername] = useState();
+  const [fullname, setFullname] = useState(String);
+  const [username, setUsername] = useState(Number);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPageAsset, setCurrentPageAsset] = useState(1);
   const [popupasset, setPopupasset] = useState(false);
-  const [selectedCheckboxesPerPage, setSelectedCheckboxesPerPage] = useState({});
+  const [selectedCheckboxesPerPage, setSelectedCheckboxesPerPage] = useState<SelectedCheckboxes>({});
   const pageSize = 10;
   useEffect(() => {
     async function getlistuser() {
@@ -39,7 +39,7 @@ function page() {
     }
     getlistuser();
   }, []);
-  const handleSuccessButtonClick = (wording) => {
+  const handleSuccessButtonClick = (wording:string) => {
     toast.success(wording, {
       position: "top-center",
       autoClose: 2000,
@@ -63,7 +63,7 @@ function page() {
       theme: "light",
     });
   };
-  async function getallassetuser(username) {
+  async function getallassetuser(username:number) {
     try {
       const ressw = await assetusersw(username); // ดึง Asset HW
       const reshw = await assetuserhw(username); // ดึง Asset SW
@@ -81,7 +81,7 @@ function page() {
       console.log(error);
     }
   }
-  async function assigningitem(username, itemid, itemname, assignby) {
+  async function assigningitem(username:number, itemid:number, itemname:string, assignby:number) {
     const response = await assignasset({
       username: username,
       itemid: itemid,
@@ -98,8 +98,8 @@ function page() {
     const response = await assetmasterassign();
     setListasset(response);
   }
-  const handleCheckboxChange = (event, itemId, itemname) => {
-    const selectedCheckboxesPage = { ...selectedCheckboxesPerPage }; //เก็บข้อมูลทั้งหมดใน array ที่มีอยู่ก่อนหน้า
+  const handleCheckboxChange = (event:React.ChangeEvent<HTMLInputElement>, itemId:number, itemname:string) => {
+    const selectedCheckboxesPage:SelectedCheckboxes = { ...selectedCheckboxesPerPage }; //เก็บข้อมูลทั้งหมดใน array ที่มีอยู่ก่อนหน้า
     if (event.target.checked) {
       //selectedCheckboxesPage[currentPageAsset].push({itemId,itemname});
       selectedCheckboxesPage[currentPageAsset] = [
@@ -115,15 +115,15 @@ function page() {
     }
     setSelectedCheckboxesPerPage(selectedCheckboxesPage);
   };
-  const AssigningAsset = (funame, name) => {
+  const AssigningAsset = (funame:string, name:number) => {
     setFullname(funame);
     setUsername(name);
     getallassetuser(name);
   };
-  const handlePageChange = (page) => {
+  const handlePageChange = (page:number) => {
     setCurrentPage(page);
   };
-  const handlePageChangeAsset = (page) => {
+  const handlePageChangeAsset = (page:number) => {
     setCurrentPageAsset(page);
   };
   const closepopupasset = () => {
@@ -131,15 +131,16 @@ function page() {
       { length: listasset.length / pageSize + 1 },
       (_, index) => index + 1
     ); //ลูป array ตามจำนวนหน้า Pagination
-    for (const number of numbersArray) {
-      if (selectedCheckboxesPerPage && selectedCheckboxesPerPage[number]) {
+    const selectedCheckboxesPerPage:SelectedCheckboxes={}
+    for (const pagenumber of numbersArray) {
+      if (selectedCheckboxesPerPage && selectedCheckboxesPerPage[pagenumber]) {
         //เช็คหน้าที่มีค่า
-        for (const checkbox of selectedCheckboxesPerPage[number]) {
+        for (const checkbox of selectedCheckboxesPerPage[pagenumber]) {
           const { itemId, itemname } = checkbox;
           if (checkbox) {
             //console.log(itemId + ":" + itemname);
             //            handleSuccessButtonClick();
-            assigningitem(username, itemId, itemname, "1");
+            assigningitem(username, itemId, itemname, 1);
             //เช็คค่าที่รับมา
             //console.log(checkboxes);
           }
@@ -158,14 +159,13 @@ function page() {
     getasset();
     setPopupasset(true);
   };
-  const handlePopupResult = (result) => {
+  const handlePopupResult = (result:boolean) => {
     if (result) {
       getallassetuser(username);
     }
   };
   const paginatePost = paginate(listdata, currentPage, pageSize); //กำหนดการแสดงข้อมูลในตาราง User
   const paginatePostAsset = paginate(listasset, currentPageAsset, pageSize); //กำหนดการแสดงข้อมูลในตาราง Asset
-
   return (
     <>
       <Back />
@@ -190,7 +190,7 @@ function page() {
                 </tr>
               </thead>
               <tbody>
-                {paginatePost.map((res, ind) => (
+                {paginatePost.map((res:any, ind:number) => (
                   <tr
                     className="bg-white border-b dark:bg-gray-800 dark:border-gray-700  hover:bg-gray-300 dark:hover:bg-gray-600"
                     key={ind}
@@ -228,7 +228,7 @@ function page() {
               <div className="p-2">
                 Hardware
                 <section className="border border-gray-200  rounded-lg p-2">
-                  {listassetuserhw.map((key) => (
+                  {listassetuserhw.map((key:any) => (
                     <BadgeBlue
                       key={key.ItemID}
                       name={key.AssetItem}
@@ -244,7 +244,7 @@ function page() {
               <div className="p-2">
                 Software
                 <section className="border border-gray-200  rounded-lg p-2">
-                  {listassetusersw.map((key) => (
+                  {listassetusersw.map((key:any) => (
                     <BadgeGreen
                       key={key.ItemID}
                       name={key.AssetItem}
@@ -321,7 +321,8 @@ function page() {
                     </tr>
                   </thead>
                   <tbody>
-                    {paginatePostAsset.map((res, ind) => (
+                    {paginatePostAsset.map((res:any, ind:number) => (
+                      
                       <tr
                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700  hover:bg-gray-300 dark:hover:bg-gray-600"
                         key={ind}
@@ -331,9 +332,7 @@ function page() {
                             id="checkbox-all-search"
                             type="checkbox"
                             checked={
-                              selectedCheckboxesPerPage[currentPageAsset]?.some(
-                                (item) => item.itemId === res.ItemID
-                              ) || false //ถ้าค่า ItemName มีใน array[page] = true | false*/
+                              selectedCheckboxesPerPage[currentPageAsset]?.some((item) => item.itemId === res.ItemID) || false //ถ้าค่า ItemName มีใน array[page] = true | false*/
                             }
                             onChange={(e) =>
                               handleCheckboxChange(e, res.ItemID, res.ItemName)

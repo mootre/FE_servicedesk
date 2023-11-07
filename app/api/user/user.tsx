@@ -9,7 +9,7 @@ export function alluser() {
   }).then((data) => data.json());
 }
 
-export function assignasset(credentials) {
+export function assignasset(credentials:any) {
   return fetch("http://10.15.0.23:4000/v1/addasset", {
     method: "POST",
     headers: {

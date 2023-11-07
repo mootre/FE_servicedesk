@@ -4,10 +4,10 @@ import {userService} from '../api/auth'
 
 function Login() {
 
-    const [username,setUsername] = useState();
-    const [password,setPassword] = useState();
+    const [username,setUsername] = useState(String);
+    const [password,setPassword] = useState(String);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         //console.log(username)
         const response = await userService.authlogin({ username, password });
