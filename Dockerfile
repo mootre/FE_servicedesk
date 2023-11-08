@@ -1,23 +1,15 @@
-FROM node:18-alpine as base 
-WORKDIR /app
-COPY package*.json tailwind.config.ts tsconfig.json  ./ 
-EXPOSE 3000
+FROM node:18-alpine
 
-FROM base as builder
 WORKDIR /app
+
+COPY package.json ./
+
+RUN npm install
+
 COPY . .
+
 RUN npm run builder
 
-FROM base as production
-WORKDIR /app
+COPY .next ./.next
 
-ENV NODE_ENV=production
-RUN npm ci
-
-CMD npm start
-
-FROM base as dev
-ENV NODE_ENV=development
-RUN npm install 
-COPY . .
-CMD npm run dev
+CMD ["npm","run","dev"]
