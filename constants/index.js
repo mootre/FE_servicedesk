@@ -1,52 +1,45 @@
+
 export const sidebarLinks = [
   {
     imgURL: "/assets/home.svg",
     route: "/",
+    state: "main",
     label: "Dashboard",
+  },
+  {
+    imgURL: "/assets/request.svg",
+    route: "",
+    state: "main",
+    label: "Transection",
   },
   {
     imgURL: "/assets/hardware.svg",
     route: "/asset",
+    state: "sub",
     label: "Asset",
   },
   {
     imgURL: "/assets/database.svg",
     route: "/master",
+    state: "sub",
     label: "Asset Master",
   },
   {
     imgURL: "/assets/assign.svg",
     route: "/assign",
+    state: "sub",
     label: "Assigning Asset",
   },
   {
     imgURL: "/assets/ticket.svg",
     route: "/ticket",
+    state: "main",
     label: "Ticket",
-  },
-  {
-    imgURL: "/assets/search.svg",
-    route: "/search",
-    label: "Search",
-  },
-  {
-    imgURL: "/assets/heart.svg",
-    route: "/activity",
-    label: "Activity",
-  },
-  {
-    imgURL: "/assets/create.svg",
-    route: "/create-thread",
-    label: "Create Thread",
-  },
-  {
-    imgURL: "/assets/community.svg",
-    route: "/communities",
-    label: "Communities",
   },
   {
     imgURL: "/assets/user.svg",
     route: "/profile",
+    state: "main",
     label: "Profile",
   },
 ];

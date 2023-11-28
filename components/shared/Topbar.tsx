@@ -22,7 +22,10 @@ async function Topbar() {
       <div>
       {session?
         <>
+          <div className="flex justify-between items-center">
+          <p>K.{session?.user?.fullname}</p>
           <LogoutButton/>
+          </div>
         </>
           :
           <>
