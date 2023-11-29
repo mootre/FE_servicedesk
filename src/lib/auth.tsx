@@ -5,6 +5,7 @@ import { userdetail, userlogin } from "@/app/api/user/user";
 declare module "next-auth" {
   interface Session {
     user: {
+      name: String;
       fullname: String;
       auth: String;
     };
@@ -53,8 +54,10 @@ export const authOptions: NextAuthOptions = {
       const rs = await userdetail(session?.user?.name);
       let fullname = rs?.result?.fullname;
       let auth = rs?.result?.auth;
+      let name = session?.user?.name;
       session.user = {
         ...session.user,
+        name,
         fullname,
         auth,
       };

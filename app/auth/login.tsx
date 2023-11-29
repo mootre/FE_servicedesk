@@ -1,6 +1,6 @@
 "use client";
 import React, { useState,useEffect } from 'react'
-import {userService} from '../api/auth'
+//import {userService} from '../api/auth'
 
 function Login() {
 
@@ -10,13 +10,13 @@ function Login() {
     const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         //console.log(username)
-        const response = await userService.authlogin({ username, password });
+        /*const response = await userService.authlogin({ username, password });
         if (response) {
             localStorage.setItem("accessToken", response.token);
             //router.push('../../menu/main.tsx');
         }else{
             localStorage.setItem("accessToken", "12345");
-        }
+        }*/
       };
 
 

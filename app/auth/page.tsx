@@ -11,7 +11,6 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { userlogin } from "../api/user/user";
 import { signIn } from "next-auth/react";
 
 function Copyright(props: any) {
@@ -31,7 +30,6 @@ function Copyright(props: any) {
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
-export const COOKIE_NAME = "OurSiteJWT";
 
 export default function SignInSide() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -50,61 +48,14 @@ export default function SignInSide() {
           redirect: true,
           callbackUrl:'/'
         })
-
-      /*const  rs = await axios.post("/api/login", payload);
-  
-      alert(JSON.stringify(rs));*/
-
-      
-
-     // sessionStorage.setItem("key",rs.access_token);
-
-     /*const serializedCookie = serialize("JWTCookie", _data.access_token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        maxAge: 60 * 1,
-      });
-    console.log("Serialized Cookie:", _data);
-
-      /*const successResponse = new Response(JSON.stringify({ message: "Authenticated!" }), {
-        status: 200,
-        headers: {"Set-Cookie": serializedCookie},
-      });
-  
-      return  successResponse;*/
-      //return _data
     }catch(error){
       console.error("Error during form submission:", error);
-    
       // Return an error response
       const errorResponse = new Response(JSON.stringify({ error: "Failed to authenticate." }), {
         status: 500,
       });
       return errorResponse;
-      
     }
-    
-    /*(async () => {
-      try {
-        const seralized = serialize(COOKIE_NAME, data.access_token, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-          sameSite: "strict",
-          maxAge: 60 * 1,
-        });
-        const msg = {
-          message: "Authenticated!",
-        };
-    
-        console.log("Serialized Cookie:", JSON.stringify(seralized));
-        return new Response(null, {
-          headers: { "Set-Cookie": seralized },
-        });
-      } catch (error) {
-        return error;
-      }
-    })(); */ 
   };
 
   return (
