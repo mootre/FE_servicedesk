@@ -93,7 +93,7 @@ function page() {
     username: number,
     itemid: number,
     itemname: string,
-    assignby: number
+    assignby: any
   ) {
     const response = await assignasset({
       username: username,
@@ -150,16 +150,16 @@ function page() {
       { length: listasset.length / pageSize + 1 },
       (_, index) => index + 1
     ); //ลูป array ตามจำนวนหน้า Pagination
-    const selectedCheckboxesPerPage: SelectedCheckboxes = {};
+    //let selectedCheckboxesPerPage: SelectedCheckboxes = {};
     for (const pagenumber of numbersArray) {
       if (selectedCheckboxesPerPage && selectedCheckboxesPerPage[pagenumber]) {
         //เช็คหน้าที่มีค่า
         for (const checkbox of selectedCheckboxesPerPage[pagenumber]) {
           const { itemId, itemname } = checkbox;
           if (checkbox) {
-            
+            //console.log(itemId + ":" + itemname);
             //            handleSuccessButtonClick();
-            assigningitem(username, itemId, itemname,1);
+            assigningitem(username, itemId, itemname, session?.user?.name);
             //เช็คค่าที่รับมา
             //console.log(checkboxes);
           }
