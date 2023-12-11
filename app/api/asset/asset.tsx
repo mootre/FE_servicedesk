@@ -69,3 +69,21 @@ export function assetcomponent() {
     }
   }).then((data) => data.json());
 }
+export function assettimeline(assetid:number) {
+  const url = `http://10.15.0.23:4000/v1/gettimeline/${assetid}`;
+  return fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      }).then((data) => data.json());
+}
+export function updateAssetAcc(credentials:any) {
+  return fetch("http://10.15.0.23:4000/v1/updateassetacc", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  }).then((data) => data.json());
+}

@@ -3,11 +3,11 @@ import PopupConfirm from "./PopupConfirm";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { updateassigned } from "@/app/api/assign/assign";
-import { async } from "rxjs";
+import { useSession } from "next-auth/react";
 
-async function UpdateAssetItem(name: string, id: number) {
-  const res = await updateassigned({ itemid: id });
-  if (res.status == 200) {
+async function UpdateAssetItem(name: string, id: number, userassign: any) {
+  const res = await updateassigned({ itemid: id,assignby: userassign });
+  if (res.status === 200) {
     return true;
   }
   return false;
@@ -41,7 +41,7 @@ export function BadgeGreen({
   onResult: (result:boolean)=>void;
 }) {
   const [toggle, setToggle] = useState(false);
-
+  const {data:session} = useSession();
   const handleClick = () => {
     setToggle(!toggle);
   };
@@ -51,7 +51,7 @@ export function BadgeGreen({
   };
 
   const handleChangeStatus = async() => {
-    const result = await UpdateAssetItem(name, itemid);
+    const result = await UpdateAssetItem(name, itemid,session?.user?.name);
     if (result) {
       handleSuccessButtonClick(`Remove : ${name} successfully.`);
       onResult(true);
@@ -181,7 +181,7 @@ export function BadgeBlue({
   onResult: (result:boolean)=>void;
 }){
   const [toggle, setToggle] = useState(false);
-
+  const {data:session} = useSession();
   const handleClick = () => {
     setToggle(!toggle);
   };
@@ -191,7 +191,7 @@ export function BadgeBlue({
   };
 
   const handleChangeStatus = async () => {
-    const result = await UpdateAssetItem(name, itemid);
+    const result = await UpdateAssetItem(name, itemid,session?.user?.name);
     if (result) {
       handleSuccessButtonClick(`Remove : ${name} successfully.`);
       onResult(true);

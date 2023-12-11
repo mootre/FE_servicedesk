@@ -35,7 +35,7 @@ function page() {
       {session ? (
         <div>
           <Back />
-          <div className="grid relative overflow-x-auto shadow-md sm:rounded-lg">
+          <div className="grid relative overflow-x-auto shadow-md lg:grid-cols-1 md:grid-cols-3 sm:rounded-lg ">
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead className="text-xs text-white uppercase bg-gray-500  dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -120,13 +120,13 @@ function page() {
                 ))}
               </tbody>
             </table>
-            <Pagination
-              items={listdata.length}
-              pageSize={pageSize}
-              currentPage={currentPage}
-              onPageChange={handlePageChange}
-            />
           </div>
+          <Pagination
+            items={listdata.length}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
         </div>
       ) : null}
     </>

@@ -114,6 +114,7 @@ function page() {
       sdate: sdate,
       edate: edate,
       description: description,
+      insertby: session?.user.name,
     });
     if (response.status == 200) {
       handleSuccessButtonClick();

@@ -17,20 +17,29 @@ import SendIcon from "@mui/icons-material/Send";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import StarBorder from "@mui/icons-material/StarBorder";
+import { useSession } from "next-auth/react";
+import { upperCase } from "lodash";
 
 function LeftSidebar() {
+  const { data: session } = useSession();
   const [open, setOpen] = React.useState(true);
   const pathname = usePathname();
   const handleClick = () => {
     setOpen(!open);
   };
+  const filteredLinks = sidebarLinks.filter(
+    (link) =>
+      link.level.toUpperCase() === session?.user?.dep?.toUpperCase() ||
+      link.level === "other"
+  );
   return (
     <section className="custom-scrollbar leftsidebar">
       <div className="flex flex-1 w-full flex-col gap-1 px-8">
-        {sidebarLinks.map((link) => {
-           
-          const isActive =(pathname.includes(link.route) && link.route.length > 1) ||pathname === link.route;
-         
+        {filteredLinks.map((link) => {
+          const isActive =
+            (pathname.includes(link.route) && link.route.length > 1) ||
+            pathname === link.route;
+
           return (
             <Link
               href={link.route}
@@ -43,7 +52,7 @@ function LeftSidebar() {
                 alt={link.label}
                 height={20}
                 width={20}
-                ></Image>
+              ></Image>
               <p
                 className={`max-lg:hidden ${
                   isActive ? "text-gray-700" : "text-gray-700 "

@@ -8,6 +8,7 @@ declare module "next-auth" {
       name: String;
       fullname: String;
       auth: String;
+      dep: String;
     };
   }
 }
@@ -62,11 +63,13 @@ export const authOptions: NextAuthOptions = {
       let fullname = rs?.result?.fullname;
       let auth = rs?.result?.auth;
       let name = session?.user?.name;
+      let dep = rs?.result?.dep;
       session.user = {
         ...session.user,
         name,
         fullname,
         auth,
+        dep,
       };
       return session;
     },

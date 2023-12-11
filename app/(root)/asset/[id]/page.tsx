@@ -1,10 +1,3 @@
-/*import {FC} from "react"
-interface pageProps{
-    params:{id:string}
-}
-const page:FC<pageProps>=({params})=>{
-    return <div>page : {params.id}</div>
-}*/
 "use client";
 import React, { useState, useEffect } from "react";
 import { asset, updateasset } from "@/app/api/asset/asset";
@@ -15,6 +8,8 @@ import Back from "@/components/ui/Back";
 import AssetComponent from "@/components/forms/AssetComponent";
 import { useSession } from "next-auth/react";
 import { useSessionLogin } from "@/components/function/function";
+import { TimelineAsset } from "@/components/ui/Timeline";
+
 
 //export default page;
 export default function page({ params }: { params: { id: number } }) {
@@ -93,6 +88,7 @@ export default function page({ params }: { params: { id: number } }) {
       sdate: sdate,
       edate: edate,
       description: description,
+      insertby: session?.user.name,
     });
     if (response.status == 200) {
       handleSuccessButtonClick();
@@ -207,6 +203,7 @@ export default function page({ params }: { params: { id: number } }) {
               </li>
             </ul>
             <div id="myTabContent">
+              {/* Detail */}
               <div
                 className={`p-4  ${
                   activeTab === "Details" ? "block" : "hidden"
@@ -464,6 +461,7 @@ export default function page({ params }: { params: { id: number } }) {
                   </button>
                 </form>
               </div>
+              {/* Component */}
               <div
                 className={`p-4 ${
                   activeTab === "Component" ? "block" : "hidden"
@@ -474,6 +472,7 @@ export default function page({ params }: { params: { id: number } }) {
               >
                 <AssetComponent assetid={params.id} />
               </div>
+              {/* Install 
               <div
                 className={`p-4  ${
                   activeTab === "Installation" ? "block" : "hidden"
@@ -484,6 +483,10 @@ export default function page({ params }: { params: { id: number } }) {
               >
                 Installation
               </div>
+              
+              */}
+              
+              {/* Transection */}
               <div
                 className={`p-4  ${
                   activeTab === "Transection" ? "block" : "hidden"
@@ -492,11 +495,13 @@ export default function page({ params }: { params: { id: number } }) {
                 role="tabpanel"
                 aria-labelledby="Transection-tab"
               >
-                Transection
+               <TimelineAsset value={params.id} />
               </div>
             </div>
           </div>
-          <ToastContainer
+        </div>
+      ) : null}
+      <ToastContainer
             position="top-center"
             autoClose={5000}
             hideProgressBar={false}
@@ -508,8 +513,6 @@ export default function page({ params }: { params: { id: number } }) {
             pauseOnHover
             theme="light"
           />
-        </div>
-      ) : null}
     </>
   );
 }

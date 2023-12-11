@@ -9,12 +9,14 @@ import { componetbyitem } from "@/app/api/asset/[...aseetid]/asset";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PopupConfirm from "../ui/PopupConfirm";
+import { useSession } from "next-auth/react";
 
 interface Selectboxpage {
   [key: number]: { itemId: number; itemname: string }[];
 }
 
 function AssetComponent({ assetid }: { assetid: number }) {
+  const { data: session } = useSession();
   const [listasset, setListasset] = useState([]);
   const [listcomponent, setListcomponent] = useState([]);
   const [username, setUsername] = useState(Number);
@@ -25,25 +27,27 @@ function AssetComponent({ assetid }: { assetid: number }) {
     useState<Selectboxpage>({});
   const [parentchild, setParentchild] = useState({ parentid: 0, childid: 0 });
   const pageSize = 10;
+  useEffect(() => {
+    getlistcomponent();
+  }, [listcomponent]);
 
   async function getlistcomponent() {
     try {
-      const res = await componetbyitem({ params: { id: assetid } });
+      const res = await componetbyitem(assetid);
       if (res.success) {
         setListcomponent(res.data);
+      }else{
+        setListcomponent([]);
       }
     } catch (error) {
       console.log(error);
     }
   }
-  useEffect(() => {
-    getlistcomponent();
-  }, []);
   async function assigningitem(
     username: number,
     itemid: number,
     itemname: string,
-    assignby: number
+    assignby: any
   ) {
     const response = await assigncomponent({
       username: username,
@@ -51,12 +55,12 @@ function AssetComponent({ assetid }: { assetid: number }) {
       component: itemid,
       assignby: assignby,
     });
-    if (response.status == 200) {
-      console.log(123);
+    if (response.status === 200) {
+      getlistcomponent();
       handleSuccessButtonClick(`Inserted ${itemname} successfully.`);
       setSelectedCheckboxesPerPage({});
     } else {
-      return;
+      return null;
     }
   }
   async function getasset() {
@@ -76,7 +80,7 @@ function AssetComponent({ assetid }: { assetid: number }) {
     });
   };
   const closepopupasset = () => {
-    const numbersArray = Array.from(
+  const numbersArray = Array.from(
       { length: listasset.length / pageSize + 1 },
       (_, index) => index + 1
     ); //ลูป array ตามจำนวนหน้า Pagination
@@ -86,7 +90,7 @@ function AssetComponent({ assetid }: { assetid: number }) {
         for (const checkbox of selectedCheckboxesPerPage[number]) {
           const { itemId, itemname } = checkbox;
           if (checkbox) {
-            assigningitem(username, itemId, itemname, 1);
+            assigningitem(assetid, itemId, itemname, session?.user?.name);
           }
         }
       }
@@ -130,16 +134,18 @@ function AssetComponent({ assetid }: { assetid: number }) {
   const handlePopupResult = async (result: boolean) => {
     if (result) {
       const res = await deletecomponent({
-        username: username,
+        username: assetid,
         parentid: parentchild.parentid,
         childid: parentchild.childid,
+        assignby: session?.user?.name,
       });
-      if (res.status == 200) {
+      if (res.status === 200) {
         handleSuccessButtonClick(`Remove successfully.`);
         getlistcomponent();
       }
     }
     result ? setOpenconfirm(false) : setOpenconfirm(false);
+    
   };
   const openpopupconfirm = (parent: number, child: number) => {
     setParentchild({
@@ -148,7 +154,6 @@ function AssetComponent({ assetid }: { assetid: number }) {
     });
     setOpenconfirm(!openconfirm);
   };
-
   const paginatePostAsset = paginate(listasset, currentPageAsset, pageSize); //กำหนดการแสดงข้อมูลในตาราง Asset
 
   return (
