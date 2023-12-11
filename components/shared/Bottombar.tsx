@@ -5,13 +5,21 @@ import { sidebarLinks } from "@/constants";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useSession } from 'next-auth/react';
 
 function Bottombar() {
   const pathname = usePathname();
+  const { data: session } = useSession();
+  const [open, setOpen] = React.useState(true);
+  const filteredLinks = sidebarLinks.filter(
+    (link) =>
+      link.level.toUpperCase() === session?.user?.dep?.toUpperCase() ||
+      link.level === "other"
+  );
   return (
     <section className='bottombar'>
       <div className="bottombar_container">
-      {sidebarLinks.map((link) => {
+      {filteredLinks.map((link) => {
           const isActive =
             (pathname.includes(link.route) && link.route.length > 1) ||
             pathname === link.route;
